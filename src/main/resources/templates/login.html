@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Login page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body class="vh-100">
+<div class="container-fluid h-100 bg-light d-flex justify-content-center">
+  <div class="col-2 mt-5">
+    <span class="fw-bold fs-3">Please sign in</span>
+    <form name="f" method="post" action="/process_login">
+      <div  class="d-flex">
+        <label for="username"></label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+      </div>
+      <div  class="d-flex">
+        <label for="password"></label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+      </div>
+      <div class="mt-2">
+        <input class="btn btn-primary w-100" type="submit" value="Sign in">
+      </div>
+      <div th:if="${param.error}" style="color: red">
+        Неправильное имя или пароль
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
