@@ -10,5 +10,3 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/user").setViewName("user");
     }
 }
-
-

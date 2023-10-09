@@ -5,7 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -27,15 +28,18 @@ public class User implements UserDetails {
 
     @Column
     @ManyToMany
-    private List<Role> roles;
+    private Set<Role> roles;
+
     public User() {
     }
+
     public User(String username, int age, String password) {
         this.username = username;
         this.age = age;
         this.password = password;
 
     }
+
     public Long getId() {
         return id;
     }
@@ -61,11 +65,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
