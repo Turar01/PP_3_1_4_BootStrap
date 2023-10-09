@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.models;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
@@ -25,16 +27,17 @@ public class User implements UserDetails {
     @NotNull
     private String password;
 
-    @Column
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
     public User() {
     }
-    public User(String username, int age, String password) {
+    public User(String username, int age, String password, List<Role> roles) {
         this.username = username;
         this.age = age;
         this.password = password;
-
+        this.roles = roles;
     }
     public Long getId() {
         return id;
