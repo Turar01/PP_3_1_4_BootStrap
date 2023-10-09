@@ -7,7 +7,6 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -26,8 +25,8 @@ public class DbInit {
         roleService.addRole(roleAdmin);
         roleService.addRole(roleUser);
 
-        User user = new User("user",  2, "user", List.of(roleUser));
-        User admin = new User("admin",  1, "admin", List.of(roleAdmin, roleUser));
+        User user = new User("user",  2, "user", Set.of(roleUser));
+        User admin = new User("admin",  1, "admin", Set.of(roleAdmin, roleUser));
         userService.register(user);
         userService.register(admin);
     }
