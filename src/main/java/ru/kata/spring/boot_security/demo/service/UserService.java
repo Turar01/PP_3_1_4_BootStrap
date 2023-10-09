@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
     }
     @Transactional
     public void updateUser(Long id, User user) {
-        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
             existingUser.setAge(user.getAge());

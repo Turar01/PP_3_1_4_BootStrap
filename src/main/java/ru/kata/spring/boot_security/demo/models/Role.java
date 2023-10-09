@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.models;
 
 import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 import java.util.List;
 
