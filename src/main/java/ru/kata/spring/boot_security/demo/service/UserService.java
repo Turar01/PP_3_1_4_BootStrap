@@ -11,20 +11,22 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.models.User;
 import java.util.*;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -33,17 +35,15 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    @Transactional(readOnly = true)
     public List<User> allUsers() {
         return userRepository.findAll();
     }
     @Transactional
     public void register(User user) {
-        user.setPassword(user.getPassword());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
             existingUser.setAge(user.getAge());
-            existingUser.setPassword(user.getPassword());
+            existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             existingUser.setRoles(user.getRoles());
             userRepository.save(existingUser);
         }
